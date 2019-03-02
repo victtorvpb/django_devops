@@ -5,10 +5,12 @@ verify_ssl = true
 
 [dev-packages]
 tox = "*"
+flake8 = "*"
 
 [packages]
 djongo = "*"
 django = "*"
+
 
 [requires]
 python_version = "3.7"

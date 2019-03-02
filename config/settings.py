@@ -76,7 +76,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': 'django_devops',
-        'HOST':'mongo',
+        'HOST': 'mongo',
         'USER': 'root',
         'PASSWORD': '123456',
     }
