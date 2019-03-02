@@ -1,0 +1,36 @@
+version: '3.5'
+
+services:
+
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_DATABASE: django_devops
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: '123456'
+    networks:
+      - django_devops_network
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    depends_on:
+      - mongo
+    environment:
+      MONGO_INITDB_DATABASE: django_devops
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: '123456'
+    networks:
+      - django_devops_network
+
+networks:
+  django_devops_network:
+    name: djangodevopsnetwork
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
