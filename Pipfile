@@ -16,6 +16,7 @@ pytest-cov = "*"
 coverage = "*"
 gevent = "*"
 djangorestframework = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.7"
