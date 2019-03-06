@@ -109,3 +109,4 @@ venv.bak/
 ansible/inventory/hosts
 cobertura.xml
 junit.xml
+*.retry
