@@ -19,12 +19,6 @@ pipeline {
             }
         }
 
-        stage('Remove pyc') {
-            steps {
-                sh 'make ci-remove-pyc'
-            }
-        }
-
         stage('Ensure container is stopped') {
             steps {
                 sh 'make ci-stop'

@@ -11,6 +11,8 @@ WORKDIR /code
 RUN find /code -name '*.pyc' -delete
 RUN find /code -name '__pycache__' -delete
 
+RUN apt update
+RUN apt-get -y install build-essential
 
 ### upgrade pip
 RUN pip install -U pip

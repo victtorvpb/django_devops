@@ -2,16 +2,20 @@ SHELL=/bin/bash
 DOCKER_COMPOSE=docker-compose.yml
 SUDO=sudo
 
-clean-cache:
-	$(SUDO) rm -fr htmlcov;
-	$(SUDO) rm -fr .cache;
-	$(SUDO) rm -fr .coverage;
-	$(SUDO) rm -fr .pytest_cache;
-	$(SUDO) rm -fr junit.xml coverage.xml;
-	$(SUDO) find . -iname '*.pyc' -delete;
-	$(SUDO) find . -iname '*.pyo' -delete;
-	$(SUDO) find . -name '*,cover' -delete;
-	$(SUDO) find . -iname __pycache__ -delete;
+clean_cache="\
+	rm -rf htmlcov; \
+	rm -rf .cache; \
+	rm -rf .coverage; \
+	rm -rf .pytest_cache ;\
+	rm -fr junit.xml coverage.xml; \
+	find . -iname '*.pyc' -delete; \
+	find . -iname '*.pyo' -delete; \
+	find . -name '*,cover' -delete; \
+	find . -type d -name 'dirName' -print0 | xargs -0 rm -rf; \
+	"
+
+clean-cache: ci-remove-pyc
+	make exec DOCKER_COMPOSE=docker-compose-ci.yml  COMMAND=${clean_cache}
 
 build: 
 	docker-compose -f $(DOCKER_COMPOSE) build --force-rm --no-cache api
@@ -23,8 +27,10 @@ stop:
 	docker-compose -f $(DOCKER_COMPOSE) down; true
 
 exec:
-	docker-compose -f $(DOCKER_COMPOSE) exec -T api $(COMMAND)
+	docker-compose -f $(DOCKER_COMPOSE) exec -T api_devops $(COMMAND)
 
+coverage-xml: clean-cache
+	pytest --cov=. --cov-report xml:coverage.xml --junit-xml=junit.xml
 
 ci-stop:
 	make stop DOCKER_COMPOSE=docker-compose-ci.yml
@@ -36,8 +42,8 @@ ci-start:
 	make start DOCKER_COMPOSE=docker-compose-ci.yml
 
 ci-coverage-xml:
-	make exec DOCKER_COMPOSE=docker-compose-ci.yml  COMMAND="pytest --cov=. --cov-report xml:coverage.xml --junit-xml=junit.xml"
-	# docker-compose -f docker-compose-ci.yml exec -T api pytest --cov=. --cov-report xml:cobertura.xml --junit-xml=junit.xml --cov-report term
+	# make exec DOCKER_COMPOSE=docker-compose-ci.yml  COMMAND="pytest --cov=. --cov-report xml:coverage.xml --junit-xml=junit.xml"
+	make exec DOCKER_COMPOSE=docker-compose-ci.yml  COMMAND="make coverage-xml"
 ci-remove-pyc:
 	make exec DOCKER_COMPOSE=docker-compose-ci.yml  COMMAND="find . -name '*.pyc' -delete"
 ci-export-xml:
