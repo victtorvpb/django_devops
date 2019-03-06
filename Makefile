@@ -13,7 +13,7 @@ clean-cache:
 	$(SUDO) find . -name '*,cover' -delete;
 	$(SUDO) find . -iname __pycache__ -delete;
 
-build:  clean-cache
+build: 
 	docker-compose -f $(DOCKER_COMPOSE) build --force-rm --no-cache api
 
 start: 
@@ -22,7 +22,7 @@ start:
 stop:
 	docker-compose -f $(DOCKER_COMPOSE) down; true
 
-coverage-xml: clean-cache
+coverage-xml:
 	pytest --cov=. --cov-report xml:cobertura.xml --junit-xml=junit.xml --cov-report term
 
 ci-stop:
@@ -37,6 +37,6 @@ ci-start:
 ci-coverage-xml:
 	make exec-api COMMAND="make coverage-xml DOCKER_COMPOSE=docker-compose-ci.yml SUDO="
 
-ci-export-xml: clean-cache
+ci-export-xml:
 	docker cp api:/code/junit.xml .
 	docker cp api:/code/cobertura.xml .
