@@ -16,7 +16,7 @@ clean_cache="\
 	"
 
 clean-cache:
-	make exec DOCKER_COMPOSE=docker-compose-ci.yml  COMMAND=${clean_cache}
+	make exec DOCKER_COMPOSE=docker-compose-ci.yml  COMMAND=${clean_cache} | true
 
 build: clean-cache
 	docker-compose -f $(DOCKER_COMPOSE) build --force-rm --no-cache ${CONTAINER_NAME}
