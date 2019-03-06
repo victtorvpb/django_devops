@@ -8,8 +8,8 @@ COPY . /code
 WORKDIR /code
 
 ### clean pyc and file caches
-RUN find /code -name '*.pyc' -delete
-RUN find /code -name '__pycache__' -delete
+# RUN find /code -name '*.pyc' -delete
+# RUN find /code -name '__pycache__' -delete
 
 
 ### upgrade pip
