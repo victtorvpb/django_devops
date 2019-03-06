@@ -70,10 +70,11 @@ pipeline {
         // }
     }
 
-    // post {
-    //     always {
-    //         echo 'Stop existing container'
-    //         sh 'make ci-stop'
-    //     }
-    // }
+    post {
+        always {
+            echo 'Stop existing container'
+            sh 'make ci-stop'
+            sh 'make ci-remove-pyc'
+        }
+    }
 }

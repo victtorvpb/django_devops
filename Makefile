@@ -38,7 +38,8 @@ ci-start:
 ci-coverage-xml:
 	make exec DOCKER_COMPOSE=docker-compose-ci.yml  COMMAND="pytest --cov=. --cov-report xml:coverage.xml --junit-xml=junit.xml"
 	# docker-compose -f docker-compose-ci.yml exec -T api pytest --cov=. --cov-report xml:cobertura.xml --junit-xml=junit.xml --cov-report term
-
+ci-remove-pyc:
+	make exec DOCKER_COMPOSE=docker-compose-ci.yml  COMMAND="find . -name '*.pyc' -delete"
 ci-export-xml:
 	docker cp api:/code/junit.xml .
 	docker cp api:/code/cobertura.xml .
