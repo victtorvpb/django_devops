@@ -40,7 +40,7 @@ stop:
 exec:
 	docker-compose -f $(DOCKER_COMPOSE) exec -T ${CONTAINER_NAME} $(COMMAND)
 
-coverage-xml: clean-cache-docker
+coverage-xml clean-cache: 
 	pytest --cov=. --cov-report xml:coverage.xml --junit-xml=junit.xml
 
 ci-stop:
@@ -53,7 +53,6 @@ ci-start:
 	make start DOCKER_COMPOSE=docker-compose-ci.yml
 
 ci-coverage-xml:
-	# make exec DOCKER_COMPOSE=docker-compose-ci.yml  COMMAND="pytest --cov=. --cov-report xml:coverage.xml --junit-xml=junit.xml"
 	make exec DOCKER_COMPOSE=docker-compose-ci.yml  COMMAND="make coverage-xml"
 ci-remove-pyc:
 	make exec DOCKER_COMPOSE=docker-compose-ci.yml  COMMAND="find . -name '*.pyc' -delete"
