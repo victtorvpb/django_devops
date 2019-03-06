@@ -1,0 +1,46 @@
+version: '3.5'
+
+services:
+  api:
+    container_name: api
+    image: crawler_rss_autesporte
+    build:
+      context: .
+    command: gunicorn config.wsgi:application -c config/gunicorn.py
+    volumes:
+      - .:/code
+    ports:
+      - 80:8000
+    depends_on:
+      - tasks-migrate
+      - mongo
+    networks:
+      - django_devops_network
+  tasks-migrate:
+    container_name: migrate
+    image: crawler_rss_autesporte
+    build:
+      context: .
+    command: python manage.py migrate
+    volumes:
+      - .:/code
+    networks:
+      - django_devops_network
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_DATABASE: django_devops
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: '123456'
+    networks:
+      - django_devops_network
+
+networks:
+  django_devops_network:
+    name: djangodevopsnetwork
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
