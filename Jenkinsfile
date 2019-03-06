@@ -41,12 +41,6 @@ pipeline {
             steps {
                 sh 'make ci-coverage-xml'
             }
-        }
-
-        stage('Export xml reports') {
-            steps {
-                sh 'make ci-export-xml'
-            }
             post {
                 success {
                     // Archive unit tests for the future
@@ -66,6 +60,13 @@ pipeline {
                               zoomCoverageChart: false)
                 }
             }
+        }
+
+        stage('Export xml reports') {
+            steps {
+                sh 'make ci-export-xml'
+            }
+            
         }
     }
 
