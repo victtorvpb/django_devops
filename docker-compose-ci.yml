@@ -1,9 +1,9 @@
 version: '3.5'
 
 services:
-  api:
-    container_name: api
-    image: crawler_rss_adjango_devopsutesporte
+  api_devops:
+    container_name: api_devops
+    image: django_devops
     build:
       context: .
     command: gunicorn config.wsgi:application -c config/gunicorn.py
