@@ -3,9 +3,12 @@
   hosts: remote
   remote_user: root
   become: yes
-  
+  pre_tasks:
+    - name: Apt update
+      raw: sudo apt -y update
 
-# - hosts: remote
-#   remote_user: root # Remote user
-#   become: yes
-#   roles: setup
+  tasks:
+    - name: Setup machine
+      import_role:
+        name: setup
+      become: yes
