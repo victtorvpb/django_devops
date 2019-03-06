@@ -18,7 +18,7 @@ clean_cache="\
 clean-cache: ci-remove-pyc
 	make exec DOCKER_COMPOSE=docker-compose-ci.yml  COMMAND=${clean_cache}
 
-build: 
+build: clean-cache
 	docker-compose -f $(DOCKER_COMPOSE) build --force-rm --no-cache ${CONTAINER_NAME}
 
 start: 
@@ -47,6 +47,3 @@ ci-coverage-xml:
 	make exec DOCKER_COMPOSE=docker-compose-ci.yml  COMMAND="make coverage-xml"
 ci-remove-pyc:
 	make exec DOCKER_COMPOSE=docker-compose-ci.yml  COMMAND="find . -name '*.pyc' -delete"
-ci-export-xml:
-	docker cp api:/code/junit.xml .
-	docker cp api:/code/cobertura.xml .

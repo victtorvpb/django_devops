@@ -62,12 +62,6 @@ pipeline {
             }
         }
 
-        // stage('Export xml reports') {
-        //     steps {
-        //         sh 'make ci-export-xml'
-        //     }
-            
-        // }
     }
 
     post {
