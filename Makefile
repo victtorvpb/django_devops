@@ -1,6 +1,7 @@
 SHELL=/bin/bash
 DOCKER_COMPOSE=docker-compose.yml
 SUDO=sudo
+CONTAINER_NAME=api_devops
 
 clean_cache="\
 	rm -rf htmlcov; \
@@ -18,7 +19,7 @@ clean-cache: ci-remove-pyc
 	make exec DOCKER_COMPOSE=docker-compose-ci.yml  COMMAND=${clean_cache}
 
 build: 
-	docker-compose -f $(DOCKER_COMPOSE) build --force-rm --no-cache api
+	docker-compose -f $(DOCKER_COMPOSE) build --force-rm --no-cache ${CONTAINER_NAME}
 
 start: 
 	docker-compose -f $(DOCKER_COMPOSE) up -d
@@ -27,7 +28,7 @@ stop:
 	docker-compose -f $(DOCKER_COMPOSE) down; true
 
 exec:
-	docker-compose -f $(DOCKER_COMPOSE) exec -T api_devops $(COMMAND)
+	docker-compose -f $(DOCKER_COMPOSE) exec -T ${CONTAINER_NAME} $(COMMAND)
 
 coverage-xml: clean-cache
 	pytest --cov=. --cov-report xml:coverage.xml --junit-xml=junit.xml
