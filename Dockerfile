@@ -7,15 +7,14 @@ ENV PYTHONUNBUFFERED 1
 COPY . /code
 WORKDIR /code
 
-### clean pyc and file caches
-RUN find /code -name '*.pyc' -delete
-RUN find /code -name '__pycache__' -delete
-
-
 
 RUN apt update
 RUN apt-get -y install build-essential
-RUN make clean-cache
+
+
+### clean pyc and file caches
+RUN find /code -name '*.pyc' -delete
+RUN find /code -name '*__pycache__' -delete
 
 ### upgrade pip
 RUN pip install -U pip

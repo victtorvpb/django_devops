@@ -67,8 +67,8 @@ pipeline {
     post {
         always {
             echo 'Stop existing container'
+            sh 'make clean-cache'
             sh 'make ci-stop'
-            sh 'make clean-cache-docker'
         }
     }
 }
