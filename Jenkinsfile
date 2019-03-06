@@ -21,25 +21,25 @@ pipeline {
 
         stage('Ensure container is stopped') {
             steps {
-                sh 'sudo make ci-stop'
+                sh 'make ci-stop'
             }
         }
 
         stage('Build container image') {
             steps {
-                sh 'sudo make ci-build'
+                sh 'make ci-build'
             }
         }
 
         stage('Start container') {
             steps {
-                sh 'sudo make ci-start'
+                sh 'make ci-start'
             }
         }
 
         stage('Unit tests and Coverage') {
             steps {
-                sh 'sudo make ci-coverage-xml'
+                sh 'make ci-coverage-xml'
             }
             post {
                 success {
