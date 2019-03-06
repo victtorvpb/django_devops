@@ -15,7 +15,7 @@ clean_cache="\
 	find . -type d -name 'dirName' -print0 | xargs -0 rm -rf; \
 	"
 
-clean-cache:
+clean-cache: ci-remove-pyc
 	make exec DOCKER_COMPOSE=docker-compose-ci.yml  COMMAND=${clean_cache} | true
 
 build: clean-cache
