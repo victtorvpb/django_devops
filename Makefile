@@ -12,13 +12,23 @@ clean_cache="\
 	find . -iname '*.pyc' -delete; \
 	find . -iname '*.pyo' -delete; \
 	find . -name '*,cover' -delete; \
-	find . -type d -name 'dirName' -print0 | xargs -0 rm -rf; \
 	"
+	# find . -type d -iname '*__pycache__' -delete; \
+	# "
 
-clean-cache: ci-remove-pyc
-	make exec DOCKER_COMPOSE=docker-compose-ci.yml  COMMAND=${clean_cache} | true
+clean-cache: 
+	rm -rf htmlcov;
+	rm -rf .cache;
+	rm -rf .coverage;
+	rm -rf .pytest_cache ;\
+	rm -fr junit.xml coverage.xml;
+	find . -iname '*.pyc' -delete;
+	find . -iname '*.pyo' -delete;
+	find . -name '*,cover' -delete; 
 
-build: clean-cache
+clean-cache-docker:
+	make exec DOCKER_COMPOSE=docker-compose-ci.yml  COMMAND="make clean-cache"
+build:
 	docker-compose -f $(DOCKER_COMPOSE) build --force-rm --no-cache ${CONTAINER_NAME}
 
 start: 
@@ -30,7 +40,7 @@ stop:
 exec:
 	docker-compose -f $(DOCKER_COMPOSE) exec -T ${CONTAINER_NAME} $(COMMAND)
 
-coverage-xml: clean-cache
+coverage-xml: clean-cache-docker
 	pytest --cov=. --cov-report xml:coverage.xml --junit-xml=junit.xml
 
 ci-stop:
