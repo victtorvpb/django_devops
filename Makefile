@@ -40,7 +40,7 @@ stop:
 exec:
 	docker-compose -f $(DOCKER_COMPOSE) exec -T ${CONTAINER_NAME} $(COMMAND)
 
-coverage-xml clean-cache: 
+coverage-xml: clean-cache
 	pytest --cov=. --cov-report xml:coverage.xml --junit-xml=junit.xml
 
 ci-stop:
