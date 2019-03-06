@@ -35,6 +35,8 @@ start:
 	docker-compose -f $(DOCKER_COMPOSE) up -d
 
 stop:
+	docker rm api_devops -f; true
+	docker-compose -f $(DOCKER_COMPOSE) stop; true
 	docker-compose -f $(DOCKER_COMPOSE) down; true
 
 exec:
