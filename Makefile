@@ -22,6 +22,9 @@ start:
 stop:
 	docker-compose -f $(DOCKER_COMPOSE) down; true
 
+exec:
+	docker-compose -f $(DOCKER_COMPOSE) exec -T $(CONTAINER) $(COMMAND)
+
 coverage-xml:
 	pytest --cov=. --cov-report xml:cobertura.xml --junit-xml=junit.xml --cov-report term
 
@@ -35,7 +38,7 @@ ci-start:
 	make start DOCKER_COMPOSE=docker-compose-ci.yml
 
 ci-coverage-xml:
-	make exec-api COMMAND="make coverage-xml DOCKER_COMPOSE=docker-compose-ci.yml SUDO="
+	make exec  COMMAND="make coverage-xml DOCKER_COMPOSE=docker-compose-ci.yml SUDO="
 
 ci-export-xml:
 	docker cp api:/code/junit.xml .
