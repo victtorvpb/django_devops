@@ -21,25 +21,25 @@ pipeline {
 
         stage('Ensure container is stopped') {
             steps {
-                sh 'make ci-stop'
+                sh 'sudo make ci-stop'
             }
         }
 
         stage('Build container image') {
             steps {
-                sh 'make ci-build'
+                sh 'sudo make ci-build'
             }
         }
 
         stage('Start container') {
             steps {
-                sh 'make ci-start'
+                sh 'sudo make ci-start'
             }
         }
 
         stage('Unit tests and Coverage') {
             steps {
-                sh 'make ci-coverage-xml'
+                sh 'sudo make ci-coverage-xml'
             }
             post {
                 success {
@@ -62,12 +62,12 @@ pipeline {
             }
         }
 
-        stage('Export xml reports') {
-            steps {
-                sh 'make ci-export-xml'
-            }
+        // stage('Export xml reports') {
+        //     steps {
+        //         sh 'make ci-export-xml'
+        //     }
             
-        }
+        // }
     }
 
     // post {
