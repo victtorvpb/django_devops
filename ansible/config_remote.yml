@@ -1,0 +1,11 @@
+---
+- name: Configurations to "remote" host
+  hosts: remote
+  remote_user: root
+  become: yes
+  
+
+# - hosts: remote
+#   remote_user: root # Remote user
+#   become: yes
+#   roles: setup
