@@ -5,3 +5,5 @@ git
 README.md
 docker-compose*.yml
 .vscode
+__pycache__/
+*.pyc
