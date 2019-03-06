@@ -3,15 +3,15 @@ DOCKER_COMPOSE=docker-compose.yml
 SUDO=sudo
 
 clean-cache:
-	rm -fr htmlcov;
-	rm -fr .cache;
-	rm -fr .coverage;
-	rm -fr .pytest_cache;
-	rm -fr junit.xml cobertura.xml;
-	find . -iname '*.pyc' -delete;
-	find . -iname '*.pyo' -delete;
-	find . -name '*,cover' -delete;
-	find . -iname __pycache__ -delete;
+	$(SUDO) rm -fr htmlcov;
+	$(SUDO) rm -fr .cache;
+	$(SUDO) rm -fr .coverage;
+	$(SUDO) rm -fr .pytest_cache;
+	$(SUDO) rm -fr junit.xml coverage.xml;
+	$(SUDO) find . -iname '*.pyc' -delete;
+	$(SUDO) find . -iname '*.pyo' -delete;
+	$(SUDO) find . -name '*,cover' -delete;
+	$(SUDO) find . -iname __pycache__ -delete;
 
 build:  clean-cache
 	docker-compose -f $(DOCKER_COMPOSE) build --force-rm --no-cache api
