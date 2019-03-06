@@ -13,10 +13,10 @@ clean-cache:
 	$(SUDO) find . -name '*,cover' -delete;
 	$(SUDO) find . -iname __pycache__ -delete;
 
-build: install clean-cache
+build:  clean-cache
 	docker-compose -f $(DOCKER_COMPOSE) build --force-rm --no-cache api
 
-start: install
+start: 
 	docker-compose -f $(DOCKER_COMPOSE) up -d
 
 stop:
