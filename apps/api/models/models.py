@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Payload(models.Model):
 
     nome = models.CharField(max_length=200)
@@ -12,7 +13,6 @@ class Payload(models.Model):
     area_interesse = models.CharField(max_length=200)
     escola = models.CharField(max_length=200)
     status_escola = models.CharField(max_length=200)
-    
+
     def __str__(self):
-        return f'Nome {self.name} - Sobrenome{self.sobrenome}'
-    
+        return f"Nome {self.name} - Sobrenome{self.sobrenome}"
