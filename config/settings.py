@@ -25,7 +25,7 @@ SECRET_KEY = "%rt@djh_ivri__=i562^87pxs($gcv_p!^z^cj_0%*cqn!c=5@"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
