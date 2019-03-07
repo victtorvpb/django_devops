@@ -26,12 +26,6 @@
   become_user: "{{ target_user }}"
   no_log: "{{ no_log_value }}"
 
-- name: "Docker build: {{ docker_image_name }}"
-  shell: "docker-compose build --force-rm --no-cache {{ docker_image_name }}"
-  args:
-    chdir: "{{ app_folder }}"
-  become: yes
-  become_user: "{{ target_user }}"
 
 - name: "Docker build: {{ docker_image_name }}"
   shell: "docker-compose build --force-rm --no-cache {{ docker_image_name }}"
@@ -43,11 +37,8 @@
 - name: Docker-compose up (without task containers)
   docker_service:
     project_src: "{{ app_folder }}"
-    files: "{{ api_docker_compose_file }}"
+    files: "{{ app_folder }}/docker-compose.yml"
     build: no
     state: present
-    scale:
-      task-db-migrations: 0
-      task-collectstatic: 0
   become: yes
   become_user: "{{ target_user }}"

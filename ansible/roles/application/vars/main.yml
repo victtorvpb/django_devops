@@ -4,4 +4,4 @@ app_folder: "{{ project_folder }}/app"
 git_repo: https://github.com/victtorvpb/django_devops.git
 git_version: master
 
-docker_image_name: django_devops
+docker_image_name: api_devops
