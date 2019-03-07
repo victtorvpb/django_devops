@@ -12,3 +12,8 @@
       import_role:
         name: setup
       become: yes
+    
+    - name: Config and install application
+      import_role:
+        name: application
+      become: yes

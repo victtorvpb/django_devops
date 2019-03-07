@@ -1,0 +1,53 @@
+---
+- name: Remove default docker-compose.yml link
+  file:
+    state: absent
+    path: "{{ app_folder }}/docker-compose.yml"
+  become: yes
+
+- name: "Create docker-compose.yml symlink to docker-compose-{{ target_environment }}.yml"
+  file:
+    src: "{{ app_folder }}/docker-compose-{{ target_environment }}.yml"
+    dest: "{{ app_folder }}/docker-compose.yml"
+    owner: "{{ target_user }}"
+    group: "{{ target_user }}"
+    state: link
+  become: yes
+  become_user: "{{ target_user }}"
+
+- name: Docker-compose down
+  docker_service:
+    project_src: "{{ app_folder }}"
+    files: "{{ app_folder }}/docker-compose.yml"
+    build: no
+    state: absent
+  ignore_errors: true
+  become: yes
+  become_user: "{{ target_user }}"
+  no_log: "{{ no_log_value }}"
+
+- name: "Docker build: {{ docker_image_name }}"
+  shell: "docker-compose build --force-rm --no-cache {{ docker_image_name }}"
+  args:
+    chdir: "{{ app_folder }}"
+  become: yes
+  become_user: "{{ target_user }}"
+
+- name: "Docker build: {{ docker_image_name }}"
+  shell: "docker-compose build --force-rm --no-cache {{ docker_image_name }}"
+  args:
+    chdir: "{{ app_folder }}"
+  become: yes
+  become_user: "{{ target_user }}"
+
+- name: Docker-compose up (without task containers)
+  docker_service:
+    project_src: "{{ app_folder }}"
+    files: "{{ api_docker_compose_file }}"
+    build: no
+    state: present
+    scale:
+      task-db-migrations: 0
+      task-collectstatic: 0
+  become: yes
+  become_user: "{{ target_user }}"

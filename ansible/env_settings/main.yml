@@ -1,1 +1,3 @@
 target_user: root
+target_environment: prod
+no_log_value: true

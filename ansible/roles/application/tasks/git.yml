@@ -1,0 +1,31 @@
+---
+- name: Creates the project folder
+  file:
+    state: directory
+    path: "{{ project_folder }}"
+    owner: "{{ target_user }}"
+  become: yes
+
+- name: Check if git repo was cloned on folder
+  stat:
+    path: "{{ app_folder }}/.git"
+  become: yes
+  become_user: root
+  register: gitfolder
+
+- name: Clean files non tracked on git folder
+  shell: git clean -fd
+  args:
+    chdir: "{{ app_folder }}"
+  become: yes
+  become_user: root
+  when: gitfolder.stat.isdir is defined and gitfolder.stat.isdir
+
+- name: Get git repo of django_devops
+  git:
+    repo: "{{ git_repo }}"
+    dest: "{{ app_folder }}"
+    version: "{{ git_version }}"
+    force: yes
+  become: yes
+  become_user: "{{ target_user }}"
